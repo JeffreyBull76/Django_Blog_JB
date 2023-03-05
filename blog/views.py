@@ -12,6 +12,38 @@ class PostList(generic.ListView):
     paginage_by = 6
 
 
+class Submission(View):
+
+    def get(self, request, *args, **kwargs):
+        queryset = Post.objects
+
+        return render(
+            request,
+            'submit_post.html',
+            {
+                "submit_form": SubmitForm(),
+            }
+        )
+
+    def post(self, request, *args, **kwargs):
+        queryset = Post.objects
+        submit_form = SubmitForm(data=request.POST)
+        if submit_form.is_valid():
+            submit = submit_form.save(commit=False)
+            submit.save()
+        else:
+            submit_form = SubmitForm()
+
+        return render(
+            request,
+            'submit_post.html',
+            {
+                "submit_form": submit_form,
+                "posted": True,
+            },
+        )
+
+
 class PostDetail(View):
 
     def get(self, request, slug, *args, **kwargs):
