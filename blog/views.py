@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
 from django.http import HttpResponseRedirect
 from .models import Post
-from .forms import CommentForm
+from .forms import CommentForm, SubmitForm
 
 
 class PostList(generic.ListView):
@@ -30,6 +30,7 @@ class PostDetail(View):
                 "comments": comments,
                 "liked": liked,
                 "comment_form": CommentForm(),
+                "submit_form": SubmitForm(),
             },
         )
 
@@ -41,6 +42,13 @@ class PostDetail(View):
         liked = False
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
+
+        submit_form = SubmitForm(data=request.POST)
+        if submit_form.is_valid():
+            submit = submit_form.save(commit=False)
+            submit.save()
+        else:
+            submit_form = SubmitForm()
 
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -60,6 +68,7 @@ class PostDetail(View):
                 "comments": comments,
                 "commented": True,
                 "comment_form": comment_form,
+                "submit_form": submit_form,
                 "liked": liked
             },
         )
