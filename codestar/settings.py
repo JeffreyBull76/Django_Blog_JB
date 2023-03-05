@@ -28,10 +28,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = '7g-1!tq+o562k7_aoev06ch-j8z(4mc3-)al4+%wu9ox7sfsja'  # noqa
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['django-blog-jb.herokuapp.com', 'localhost']
 
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 # Application definition
 
