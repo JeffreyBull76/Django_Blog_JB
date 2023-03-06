@@ -14,15 +14,22 @@
 {% else %}
 
 {% if user.is_authenticated %}
-<h4>Submit new post:</h4>
-<p>Posting as: {{ user.username }}</p>
-<form method="post">
-    {{ submit_form | crispy }}
-    {% csrf_token %}
-    <a href="{% url 'home' %}">
-        <button type="submit" class="btn btn-signup btn-lg">Submit</button>
-    </a>
-</form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+                <h4>Submit new post:</h4>
+                <p>Posting as: {{ user.username }}</p>
+                <form method="post">
+                    {{ submit_form | crispy }}
+                    {% csrf_token %}
+                    <a href="{% url 'home' %}">
+                        <button type="submit" class="btn btn-signup btn-lg">Submit</button>
+                    </a>
+                </form>
+            </div>
+        </div>
+
+</div>
 {% endif %}
 {% endif %}
 
